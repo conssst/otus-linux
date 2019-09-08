@@ -17,8 +17,8 @@
 
 Редактируем файл /etc/yum.repos.d/zfs.repo 
 Для установки готового модуля в файле репозитария выбираем "zfs-kmod".
-В секции "zfs" редактируем параметр на `enabled=0`.
-В секции "zfs-kmod" редактируем параметр на `enabled=1`.
+В секции [zfs] редактируем параметр на `enabled=0`.
+В секции [zfs-kmod] редактируем параметр на `enabled=1`.
 
     [zfs]
     name=ZFS on Linux for EL7 - dkms
@@ -44,6 +44,7 @@
 Загружаем модуль
 
 `modprobe zfs`
+
 `lsmod | grep zfs`
 
     zfs                  3564468  0
@@ -65,7 +66,9 @@
 Создадим журнал записи и кэш на дисках sdd, sde, далее проверяем что всё получилось.
 
 `zpool add myzfs log /dev/sdd`
+
 `zpool add myzfs cache /dev/sde`
+
 `zpool status -v`
 
     NAME                    MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
