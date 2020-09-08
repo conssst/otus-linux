@@ -1,5 +1,6 @@
 1. Определить алгоритм с наилучшим сжатием
 
+```
 [root@zfs vagrant]# zfs create storage/gzip
 [root@zfs vagrant]# zfs create storage/zle
 [root@zfs vagrant]# zfs create storage/lzjb
@@ -34,10 +35,12 @@ storage/lzjb    compression    lzjb      local
 storage/lzjb    compressratio  6.76x     -
 storage/zle     compression    zle       local
 storage/zle     compressratio  6.92x     -
-
+```
 
 2. Определить настройки pool’a
 
+```
+[root@zfs ~]$ wget -q --load-cookies /tmp/cookies.txt "https://drive.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate 'https://drive.google.com/uc?export=download&id=1KRBNW33QWqbvbVHa3hLJivOAt60yukkg' -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p')&id=1KRBNW33QWqbvbVHa3hLJivOAt60yukkg" -O zfs_task1.tar.gz && rm -rf /tmp/cookies.txt
 [root@zfs vagrant]# tar xvfz zfs_task1.tar.gz
 zpoolexport/
 zpoolexport/filea
@@ -110,10 +113,12 @@ storage/gzip    checksum  on         default
 storage/lz4     checksum  on         default
 storage/lzjb    checksum  on         default
 storage/zle     checksum  on         default
-
+```
 
 3. Найти сообщение от преподавателей
 
+```
+[root@zfs ~]$ wget -q --load-cookies /tmp/cookies.txt "https://drive.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate 'https://drive.google.com/uc?export=download&id=1KRBNW33QWqbvbVHa3hLJivOAt60yukkg' -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p')&id=1KRBNW33QWqbvbVHa3hLJivOAt60yukkg" -O zfs_task1.tar.gz && rm -rf /tmp/cookies.txt
 [root@zfs vagrant]# zfs receive storage/otus_task < otus_task2.file
 [root@zfs vagrant]# cd /storage/otus_task/
 [root@zfs otus_task]# ls -lah
@@ -133,4 +138,4 @@ drwxr-xr-x. 3 vagrant vagrant    4 Dec 18  2017 task1
 file_mess/ README     
 [root@zfs otus_task]# cat task1/file_mess/secret_message 
 https://github.com/sindresorhus/awesome
-
+```
