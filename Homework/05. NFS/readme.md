@@ -1,0 +1,1 @@
+Из Vagrantfile создаются две виртуальные машины "nfs-server" и "nfs-client".
