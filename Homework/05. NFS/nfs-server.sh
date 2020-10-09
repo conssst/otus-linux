@@ -1,25 +1,26 @@
 #/bin/bash
+# копируем ключи, чтобы сразу могли зайти под root
 mkdir -p ~root/.ssh
 cp ~vagrant/.ssh/auth* ~root/.ssh
-sudo su
+# устанавливаем необходимые пакеты для работы nfs сервера
 dnf install -y nfs-utils
+# создаём дирректории, которые хотим расшарить
 mkdir /srv/nfs
 mkdir /srv/nfs/upload
+# задаём права на дирректорию
 chmod -R 777 /srv/nfs/upload
+# включаем поддержку udp для nfs сервера
+sed -i '50i\udp=y' /etc/nfs.conf
+# запускаем nfs сервер и rpc
 systemctl enable --now nfs-server
-systemctl enable rpcbind
-systemctl start nfs-server
-systemctl start rpcbind
+systemctl enable --now rpcbind
+# указываем дирректорию и добавляем ip клиента в конфигурацию экспорта
 echo '/srv/nfs 192.168.50.13(rw,sync)' >> /etc/exports
+# чтобы изменения вступили в силу перечитываем конфиг экспорта
 exportfs -r
-systemctl enable firewalld
-systemctl start firewalld
-firewall-cmd --add-source=192.168.50.0/24 --permanent
-firewall-cmd --add-service=nfs --permanent
-firewall-cmd --add-service=mountd --permanent
-firewall-cmd --add-service=rpc-bind --permanent
-firewall-cmd --add-port=111/udp
-firewall-cmd --add-port=111/tcp
-firewall-cmd --add-port=20048/udp
-firewall-cmd --add-port=20048/tcp
+# запускаем firewall, добавляем необходимые порты для работы nfs по udp и перечитываем правила firewall'a
+systemctl enable --now firewalld
+firewall-cmd --add-port=111/udp --permanent
+firewall-cmd --add-port=2049/udp --permanent
+firewall-cmd --add-port=20048/udp --permanent
 firewall-cmd --reload
